@@ -282,6 +282,11 @@ pub fn handle(app: &mut SlideApp, ctx: &egui::Context, req: &ControlRequest) -> 
             if let Some(ft) = s("formatTab") {
                 app.ui.format_tab = ft.to_string();
             }
+            if let Some(lang) = s("language").or(s("lang")) {
+                let norm = crate::i18n::Lang::normalize_pref(lang);
+                app.ui.language = norm.to_owned();
+                crate::i18n::set_current(crate::i18n::Lang::from_pref(norm));
+            }
             ok(serde_json::to_value(&app.ui).unwrap_or_default())
         }
         "ui.dialog.close" => {
