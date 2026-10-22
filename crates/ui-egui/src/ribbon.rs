@@ -1378,7 +1378,10 @@ fn icon_library(app: &mut SlideApp, ui: &mut Ui) {
             let mut n = 0;
             ui.horizontal_wrapped(|ui| {
                 for icon in icons {
-                    if icon.name.contains(&q) || icon.label.to_lowercase().contains(&q) {
+                    if icon.name.contains(&q)
+                        || icon.label.to_lowercase().contains(&q)
+                        || crate::i18n::t(icon.label).to_lowercase().contains(&q)
+                    {
                         icon_cell(app, ui, icon, color, hover);
                         n += 1;
                     }

@@ -1663,7 +1663,7 @@ impl SlideApp {
     /// replaced on each update; the commit replaces it as one undo step.
     fn ime_event(&mut self, e: &egui::ImeEvent) {
         let r = match e {
-            egui::Event::Preedit { text, active_range_chars } => {
+            egui::ImeEvent::Preedit { text, active_range_chars } => {
                 self.session.compose_text(text, active_range_chars.as_ref().map(|r| (r.start, r.end)))
             }
             egui::ImeEvent::Commit(text) => self.session.commit_text(text),

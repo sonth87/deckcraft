@@ -1392,8 +1392,8 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
                 });
             ui.add_space(12.0);
             heading(ui, "Language");
-            let cur_lang = app.ui.language.as_str();
-            let selected_lang = match cur_lang {
+            let cur_lang = app.ui.language.clone();
+            let selected_lang = match cur_lang.as_str() {
                 "en" => crate::i18n::Lang::EN.display_name().to_string(),
                 "vi" => crate::i18n::Lang::VI.display_name().to_string(),
                 _ => crate::tl!("System Default").to_string(),
