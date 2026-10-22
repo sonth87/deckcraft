@@ -290,7 +290,11 @@ pub fn handle(app: &mut SlideApp, ctx: &egui::Context, req: &ControlRequest) -> 
             ok(serde_json::to_value(&app.ui).unwrap_or_default())
         }
         "ui.dialog.close" => {
-            app.dialog = None;
+            if let Some(d) = app.dialog.take()
+                && d.id == "preferences"
+            {
+                crate::dialogs::restore_preferences(app, &d);
+            }
             ok(Value::Null)
         }
         "ui.dialog.open" => {
