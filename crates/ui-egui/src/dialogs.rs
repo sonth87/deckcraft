@@ -21,6 +21,11 @@ impl Dialog {
     pub fn new(id: &str) -> Self {
         Dialog { id: id.into(), params: Value::Null, fields: Default::default() }
     }
+    pub(crate) fn preferences(app: &SlideApp) -> Self {
+        let mut d = Self::new("preferences");
+        d.params = json!({ "before": preferences_snapshot(app) });
+        d
+    }
     pub fn modal(&self) -> bool {
         true
     }

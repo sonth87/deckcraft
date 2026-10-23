@@ -299,7 +299,11 @@ pub fn handle(app: &mut SlideApp, ctx: &egui::Context, req: &ControlRequest) -> 
         }
         "ui.dialog.open" => {
             let Some(id) = s("id") else { return err("missing `id`") };
-            let mut d = crate::dialogs::Dialog::new(id);
+            let mut d = if id == "preferences" {
+                crate::dialogs::Dialog::preferences(app)
+            } else {
+                crate::dialogs::Dialog::new(id)
+            };
             if let Some(fields) = p.get("fields").and_then(Value::as_object) {
                 for (k, v) in fields {
                     let v = v.as_str().map_or_else(|| v.to_string(), str::to_string);
